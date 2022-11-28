@@ -19,10 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.ui.navigation.LoginRoutes
+import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.delay
 
 @Composable
@@ -76,4 +79,12 @@ fun AppLogo(modifier: Modifier = Modifier) {
         color = Color.Red.copy(0.5f),
         fontSize = 40.sp
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SplashPreview() {
+    PokerTheme() {
+        Splash(rememberNavController())
+    }
 }
