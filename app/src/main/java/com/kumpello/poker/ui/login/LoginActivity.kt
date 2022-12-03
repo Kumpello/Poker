@@ -1,6 +1,5 @@
 package com.kumpello.poker.ui.login
 
-import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,7 +19,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.kumpello.poker.ui.login.screens.Login
 import com.kumpello.poker.ui.login.screens.Splash
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
