@@ -1,6 +1,6 @@
 package com.kumpello.poker.domain.model
 
-import com.kumpello.poker.domain.usecase.Authentication
+import com.kumpello.poker.domain.usecase.AuthenticationService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,8 +11,8 @@ import dagger.hilt.components.SingletonComponent
 object NetworkModule {
 
     @Provides
-    fun provideAuthentication(): Authentication {
-        return Authentication()
+    fun provideAuthentication(): AuthenticationService {
+        return AuthenticationService()
     }
 
 }
