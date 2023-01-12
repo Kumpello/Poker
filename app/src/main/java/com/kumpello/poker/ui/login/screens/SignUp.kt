@@ -1,5 +1,6 @@
 package com.kumpello.poker.ui.login.screens
 
+import android.accounts.Account
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -26,11 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.kumpello.poker.app.PokerApplication
+import com.kumpello.poker.data.model.AccountType
+import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 
 @Composable
-fun SignUp(navController: NavHostController) {
+fun SignUp(navController: NavHostController, authService: AuthenticationService) {
     val mContext = LocalContext.current
 
     Column(
@@ -69,7 +73,12 @@ fun SignUp(navController: NavHostController) {
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    //Things happen
+                    val response = authService.signUp(username.value.text, email.value.text, password.value.text)
+                    if (response != null) {
+                        Account(username.value.text, AccountType.REGULAR_ACCOUNT.name).also { account ->
+                            PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
+                        }
+                    }
                 },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
@@ -103,7 +112,7 @@ fun SignUp(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun SignUpPreview() {
-    PokerTheme() {
-        SignUp(rememberNavController())
+    PokerTheme {
+        SignUp(rememberNavController(), AuthenticationService())
     }
 }

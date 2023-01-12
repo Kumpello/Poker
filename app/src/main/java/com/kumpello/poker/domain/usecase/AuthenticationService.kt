@@ -29,10 +29,10 @@ class AuthenticationService @Inject constructor() {
         return Optional.ofNullable(authResponse.body())
     }
 
-    fun logError(response: Response<AuthResponseData>) {
+    private fun logError(response: Response<AuthResponseData>) {
         if (!response.isSuccessful) {
             Log.e("Authentication error: ", response.errorBody().toString())
         }
     }
-    
+
 }

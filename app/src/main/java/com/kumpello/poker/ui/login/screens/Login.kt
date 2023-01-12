@@ -26,11 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 
 @Composable
-fun Login(navController: NavHostController) {
+fun Login(navController: NavHostController, authService: AuthenticationService) {
     val mContext = LocalContext.current
 
     Column(
@@ -62,7 +63,10 @@ fun Login(navController: NavHostController) {
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                          //Things happen
+                    val response = authService.logIn(username.value.text, password.value.text)
+                    if (response != null) {
+
+                    }
                 },
                 shape = RoundedCornerShape(50.dp),
                 modifier = Modifier
@@ -96,7 +100,7 @@ fun Login(navController: NavHostController) {
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
-    PokerTheme() {
-        Login(rememberNavController())
+    PokerTheme {
+        Login(rememberNavController(), AuthenticationService())
     }
 }

@@ -24,7 +24,7 @@ import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.launch
 
-class LoginActivity: ComponentActivity() {
+class LoginActivity : ComponentActivity() {
     private lateinit var viewModel: LoginActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class LoginActivity: ComponentActivity() {
                 //Runs on every launch
             }
         }
-/*        if (User is logged) {
+/*      if (User is logged) {
             //this.startActivity(Intent(this, ApplicationActivity::class.java))
         }*/
         setContent {
