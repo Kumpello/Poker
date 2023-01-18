@@ -1,5 +1,6 @@
 package com.kumpello.poker.ui.login.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
@@ -65,7 +67,13 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
                 onClick = {
                     val response = authService.logIn(username.value.text, password.value.text)
                     if (response != null) {
-
+                        PokerApplication.saveUserID(response.get().id)
+                        PokerApplication.saveAuthToken(response.get().token)
+                        PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+                        Toast.makeText(mContext, "Login succeeded!", Toast.LENGTH_LONG)
+                        //navController.navigate()
+                    } else {
+                        Toast.makeText(mContext, "Login failed!", Toast.LENGTH_LONG)
                     }
                 },
                 shape = RoundedCornerShape(50.dp),

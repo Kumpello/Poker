@@ -1,6 +1,7 @@
 package com.kumpello.poker.ui.login.screens
 
 import android.accounts.Account
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -76,8 +77,17 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
                     val response = authService.signUp(username.value.text, email.value.text, password.value.text)
                     if (response != null) {
                         Account(username.value.text, AccountType.REGULAR_ACCOUNT.name).also { account ->
+                            //ToDo: Password is saved in plaintext, some kind of encryption needs to be added
                             PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
                         }
+                        PokerApplication.saveUserID(response.get().id)
+                        PokerApplication.saveAuthToken(response.get().token)
+                        PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+
+                        Toast.makeText(mContext, "SignUp succeeded!", Toast.LENGTH_LONG)
+                        //navController.navigate()
+                    } else {
+                        Toast.makeText(mContext, "SignUp failed!", Toast.LENGTH_LONG)
                     }
                 },
                 shape = RoundedCornerShape(50.dp),
