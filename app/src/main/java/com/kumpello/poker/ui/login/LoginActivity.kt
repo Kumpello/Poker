@@ -39,6 +39,7 @@ class LoginActivity : ComponentActivity() {
                 //Runs on every launch
             }
         }
+        //ToDo: automatic login
 /*      if (User is logged) {
             //this.startActivity(Intent(this, ApplicationActivity::class.java))
         }*/
