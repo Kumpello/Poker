@@ -84,10 +84,10 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
                         PokerApplication.saveAuthToken(response.get().token)
                         PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
 
-                        Toast.makeText(mContext, "SignUp succeeded!", Toast.LENGTH_LONG)
+                        Toast.makeText(mContext, "SignUp succeeded!", Toast.LENGTH_LONG).show()
                         //navController.navigate()
                     } else {
-                        Toast.makeText(mContext, "SignUp failed!", Toast.LENGTH_LONG)
+                        Toast.makeText(mContext, "SignUp failed!", Toast.LENGTH_LONG).show()
                     }
                 },
                 shape = RoundedCornerShape(50.dp),

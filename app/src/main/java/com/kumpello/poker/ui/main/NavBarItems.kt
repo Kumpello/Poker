@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 
 object NavBarItems {
     val BarItems = listOf(
@@ -19,7 +20,7 @@ object NavBarItems {
         ),
         BarItem(
             title = "Organizations",
-            image = Icons.Filled.Face,
+            image = Icons.Filled.Person,
             route = "organizations"
         )
     )

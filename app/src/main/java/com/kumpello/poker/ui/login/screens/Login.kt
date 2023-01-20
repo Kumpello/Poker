@@ -70,10 +70,10 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
                         PokerApplication.saveUserID(response.get().id)
                         PokerApplication.saveAuthToken(response.get().token)
                         PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
-                        Toast.makeText(mContext, "Login succeeded!", Toast.LENGTH_LONG)
+                        Toast.makeText(mContext, "Login succeeded!", Toast.LENGTH_LONG).show()
                         //navController.navigate()
                     } else {
-                        Toast.makeText(mContext, "Login failed!", Toast.LENGTH_LONG)
+                        Toast.makeText(mContext, "Login failed!", Toast.LENGTH_LONG).show()
                     }
                 },
                 shape = RoundedCornerShape(50.dp),
