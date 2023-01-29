@@ -19,6 +19,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kumpello.poker.ui.login.screens.Login
+import com.kumpello.poker.ui.login.screens.SignUp
 import com.kumpello.poker.ui.login.screens.Splash
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
@@ -60,11 +62,11 @@ class LoginActivity : ComponentActivity() {
             }
 
             composable(LoginRoutes.Login.route) {
-
+                Login(navController, viewModel.authenticationService)
             }
 
             composable(LoginRoutes.SignUp.route) {
-
+                SignUp(navController, viewModel.authenticationService)
             }
         }
     }
