@@ -23,7 +23,9 @@ import com.kumpello.poker.ui.main.screens.News
 import com.kumpello.poker.ui.main.screens.Organizations
 import com.kumpello.poker.ui.navigation.MainRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var viewModel: MainActivityViewModel
 

@@ -24,8 +24,10 @@ import com.kumpello.poker.ui.login.screens.SignUp
 import com.kumpello.poker.ui.login.screens.Splash
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
     private lateinit var viewModel: LoginActivityViewModel
 

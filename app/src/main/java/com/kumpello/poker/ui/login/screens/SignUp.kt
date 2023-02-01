@@ -78,11 +78,11 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
                     if (response != null) {
                         Account(username.value.text, AccountType.REGULAR_ACCOUNT.name).also { account ->
                             //ToDo: Password is saved in plaintext, some kind of encryption needs to be added
-                            PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
+                            //PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
                         }
-                        PokerApplication.saveUserID(response.get().id)
-                        PokerApplication.saveAuthToken(response.get().token)
-                        PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+                        //PokerApplication.saveUserID(response.get().id)
+                        //PokerApplication.saveAuthToken(response.get().token)
+                        //PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
 
                         Toast.makeText(mContext, "SignUp succeeded!", Toast.LENGTH_LONG).show()
                         //navController.navigate()

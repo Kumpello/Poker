@@ -3,7 +3,6 @@ package com.kumpello.poker.data.model
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.HTTP
-import retrofit2.http.POST
 
 interface AuthApi {
     @HTTP(method = "POST", path = "auth/signup", hasBody = true)

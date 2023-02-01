@@ -35,6 +35,7 @@ import com.kumpello.poker.ui.theme.PokerTheme
 @Composable
 fun Login(navController: NavHostController, authService: AuthenticationService) {
     val mContext = LocalContext.current
+    val application = mContext.applicationContext as PokerApplication
 
     Column(
         modifier = Modifier.padding(20.dp),
@@ -67,9 +68,9 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
                 onClick = {
                     val response = authService.logIn(username.value.text, password.value.text)
                     if (response != null) {
-                        PokerApplication.saveUserID(response.get().id)
-                        PokerApplication.saveAuthToken(response.get().token)
-                        PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+                        application.saveUserID(response.get().id)
+                        application.saveAuthToken(response.get().token)
+                        application.saveAuthRefreshToken(response.get().refreshToken)
                         Toast.makeText(mContext, "Login succeeded!", Toast.LENGTH_LONG).show()
                         //navController.navigate()
                     } else {
