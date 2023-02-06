@@ -25,10 +25,12 @@ import com.kumpello.poker.ui.login.screens.Splash
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity(), CoroutineScope by MainScope() {
     private lateinit var viewModel: LoginActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

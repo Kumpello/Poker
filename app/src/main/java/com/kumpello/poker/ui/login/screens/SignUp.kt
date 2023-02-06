@@ -13,6 +13,7 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,13 +31,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.AccountType
+import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Optional
 
 @Composable
 fun SignUp(navController: NavHostController, authService: AuthenticationService) {
     val mContext = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier.padding(20.dp),
@@ -74,7 +80,10 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    val response = authService.signUp(username.value.text, email.value.text, password.value.text)
+                    var response: Optional<AuthResponseData>
+                    coroutineScope.launch(Dispatchers.IO){
+                        response = authService.signUp(username.value.text, email.value.text, password.value.text)
+                    }
                     if (response != null) {
                         Account(username.value.text, AccountType.REGULAR_ACCOUNT.name).also { account ->
                             //ToDo: Password is saved in plaintext, some kind of encryption needs to be added

@@ -24,9 +24,11 @@ import com.kumpello.poker.ui.main.screens.Organizations
 import com.kumpello.poker.ui.navigation.MainRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
     private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {

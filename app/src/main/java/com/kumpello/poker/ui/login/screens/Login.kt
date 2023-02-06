@@ -12,6 +12,7 @@ import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,13 +29,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.app.PokerApplication
+import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 @Composable
 fun Login(navController: NavHostController, authService: AuthenticationService) {
     val mContext = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val application = mContext.applicationContext as PokerApplication
 
     Column(
@@ -66,7 +72,10 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    val response = authService.logIn(username.value.text, password.value.text)
+                    var response: Optional<AuthResponseData>
+                    coroutineScope.launch(Dispatchers.IO){
+                        val response = authService.logIn(username.value.text, password.value.text)
+                    }
                     if (response != null) {
                         application.saveUserID(response.get().id)
                         application.saveAuthToken(response.get().token)

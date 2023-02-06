@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    val tempBaseUrl = "http://localhost:8080"
+    val tempBaseUrl = "http://192.168.0.146:8080"
 
     val okHttpClient = OkHttpClient()
         .newBuilder()
