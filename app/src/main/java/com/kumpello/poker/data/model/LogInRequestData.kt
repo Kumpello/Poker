@@ -1,3 +1,3 @@
 package com.kumpello.poker.data.model
 
-data class LogInRequestData(val username: String, val password: String)
+data class LogInRequestData(val name: String, val password: String)

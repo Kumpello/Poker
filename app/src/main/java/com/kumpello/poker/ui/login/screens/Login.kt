@@ -72,14 +72,14 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    var response: Optional<AuthResponseData>
+                    var response: Optional<AuthResponseData>? = null
                     coroutineScope.launch(Dispatchers.IO){
-                        val response = authService.logIn(username.value.text, password.value.text)
+                        response = authService.logIn(username.value.text, password.value.text)
                     }
                     if (response != null) {
-                        application.saveUserID(response.get().id)
-                        application.saveAuthToken(response.get().token)
-                        application.saveAuthRefreshToken(response.get().refreshToken)
+                        application.saveUserID(response!!.get().id)
+                        application.saveAuthToken(response!!.get().token)
+                        application.saveAuthRefreshToken(response!!.get().refreshToken)
                         Toast.makeText(mContext, "Login succeeded!", Toast.LENGTH_LONG).show()
                         //navController.navigate()
                     } else {
