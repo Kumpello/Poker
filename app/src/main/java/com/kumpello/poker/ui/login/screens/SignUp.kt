@@ -1,7 +1,6 @@
 package com.kumpello.poker.ui.login.screens
 
 import android.accounts.Account
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -29,15 +28,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.AccountType
 import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
+import com.kumpello.poker.ui.login.makeToast
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.Optional
+import java.util.*
 
 @Composable
 fun SignUp(navController: NavHostController, authService: AuthenticationService) {
@@ -81,22 +80,29 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
             Button(
                 onClick = {
                     var response: Optional<AuthResponseData>? = null
-                    coroutineScope.launch(Dispatchers.IO){
-                        response = authService.signUp(username.value.text, email.value.text, password.value.text)
-                    }
-                    if (response != null) {
-                        Account(username.value.text, AccountType.REGULAR_ACCOUNT.name).also { account ->
-                            //ToDo: Password is saved in plaintext, some kind of encryption needs to be added
-                            //PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
-                        }
-                        //PokerApplication.saveUserID(response.get().id)
-                        //PokerApplication.saveAuthToken(response.get().token)
-                        //PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+                    coroutineScope.launch(Dispatchers.IO) {
+                        response = authService.signUp(
+                            username.value.text,
+                            email.value.text,
+                            password.value.text
+                        )
+                        if (response != null) {
+                            Account(
+                                username.value.text,
+                                AccountType.REGULAR_ACCOUNT.name
+                            ).also { account ->
+                                //ToDo: Password is saved in plaintext, some kind of encryption needs to be added
+                                //PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
+                            }
+                            //PokerApplication.saveUserID(response.get().id)
+                            //PokerApplication.saveAuthToken(response.get().token)
+                            //PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
 
-                        Toast.makeText(mContext, "SignUp succeeded!", Toast.LENGTH_LONG).show()
-                        //navController.navigate()
-                    } else {
-                        Toast.makeText(mContext, "SignUp failed!", Toast.LENGTH_LONG).show()
+                            makeToast(mContext, "Login succeeded!")
+                            //navController.navigate()
+                        } else {
+                            makeToast(mContext, "Login failed!")
+                        }
                     }
                 },
                 shape = RoundedCornerShape(50.dp),

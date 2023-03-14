@@ -1,6 +1,5 @@
 package com.kumpello.poker.ui.login.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -31,6 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
+import com.kumpello.poker.ui.login.makeToast
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.Dispatchers
@@ -75,15 +75,15 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
                     var response: Optional<AuthResponseData>? = null
                     coroutineScope.launch(Dispatchers.IO){
                         response = authService.logIn(username.value.text, password.value.text)
-                    }
-                    if (response != null) {
-                        application.saveUserID(response!!.get().id)
-                        application.saveAuthToken(response!!.get().token)
-                        application.saveAuthRefreshToken(response!!.get().refreshToken)
-                        Toast.makeText(mContext, "Login succeeded!", Toast.LENGTH_LONG).show()
-                        //navController.navigate()
-                    } else {
-                        Toast.makeText(mContext, "Login failed!", Toast.LENGTH_LONG).show()
+                        if (response != null) {
+                            application.saveUserID(response!!.get().id)
+                            application.saveAuthToken(response!!.get().token)
+                            application.saveAuthRefreshToken(response!!.get().refresh_token)
+                            makeToast(mContext, "Login succeeded!")
+                            //navController.navigate()
+                        } else {
+                            makeToast(mContext, "Login failed!")
+                        }
                     }
                 },
                 shape = RoundedCornerShape(50.dp),

@@ -1,6 +1,8 @@
 package com.kumpello.poker.ui.login
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -97,4 +99,8 @@ class LoginActivity : ComponentActivity(), CoroutineScope by MainScope() {
             Navigation()
         }
     }
+}
+
+fun makeToast(mContext: Context, message: String) {
+    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
 }
