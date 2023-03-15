@@ -30,15 +30,16 @@ import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
-import com.kumpello.poker.ui.login.makeToast
+import com.kumpello.poker.ui.login.LoginActivity
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 @Composable
-fun Login(navController: NavHostController, authService: AuthenticationService) {
+fun Login(navController: NavHostController, authService: AuthenticationService, activity: LoginActivity) {
     val mContext = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val application = mContext.applicationContext as PokerApplication
@@ -75,14 +76,16 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
                     var response: Optional<AuthResponseData>? = null
                     coroutineScope.launch(Dispatchers.IO){
                         response = authService.logIn(username.value.text, password.value.text)
-                        if (response != null) {
-                            application.saveUserID(response!!.get().id)
-                            application.saveAuthToken(response!!.get().token)
-                            application.saveAuthRefreshToken(response!!.get().refresh_token)
-                            makeToast(mContext, "Login succeeded!")
-                            //navController.navigate()
-                        } else {
-                            makeToast(mContext, "Login failed!")
+                        withContext(Dispatchers.Main){
+                            if (response != null) {
+                                application.saveUserID(response!!.get().id)
+                                application.saveAuthToken(response!!.get().token)
+                                application.saveAuthRefreshToken(response!!.get().refresh_token)
+                                activity.makeToast(mContext, "Login succeeded!")
+                                //navController.navigate()
+                            } else {
+                                activity.makeToast(mContext, "Login failed!")
+                            }
                         }
                     }
                 },
@@ -119,6 +122,6 @@ fun Login(navController: NavHostController, authService: AuthenticationService) 
 @Composable
 fun LoginPreview() {
     PokerTheme {
-        Login(rememberNavController(), AuthenticationService())
+        Login(rememberNavController(), AuthenticationService(), LoginActivity())
     }
 }

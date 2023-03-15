@@ -19,7 +19,7 @@ class PokerApplication: Application() {
         accountManager = AccountManager.get(this)
         mainKey = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         sharedPreferences = EncryptedSharedPreferences.create(
-            Companion.preferencesName,
+            preferencesName,
             mainKey,
             applicationContext,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
@@ -28,27 +28,27 @@ class PokerApplication: Application() {
     }
 
     fun saveUserID(id: String) {
-        sharedPreferences.edit().putString(Companion.userIDKey, id).apply()
+        sharedPreferences.edit().putString(userIDKey, id).apply()
     }
 
     fun getUserID(): String? {
-        return sharedPreferences.getString(Companion.userIDKey, null)
+        return sharedPreferences.getString(userIDKey, null)
     }
 
     fun saveAuthToken(token: String) {
-        sharedPreferences.edit().putString(Companion.authTokenKey, token).apply()
+        sharedPreferences.edit().putString(authTokenKey, token).apply()
     }
 
     fun getAuthToken(): String? {
-        return sharedPreferences.getString(Companion.authTokenKey, null)
+        return sharedPreferences.getString(authTokenKey, null)
     }
 
     fun saveAuthRefreshToken(token: String) {
-        sharedPreferences.edit().putString(Companion.authRefreshTokenKey, token).apply()
+        sharedPreferences.edit().putString(authRefreshTokenKey, token).apply()
     }
 
     fun getAuthRefreshToken(): String? {
-        return sharedPreferences.getString(Companion.authRefreshTokenKey, null)
+        return sharedPreferences.getString(authRefreshTokenKey, null)
     }
 
     companion object {

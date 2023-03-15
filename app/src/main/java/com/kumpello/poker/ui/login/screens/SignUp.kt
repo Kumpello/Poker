@@ -28,18 +28,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.AccountType
 import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
-import com.kumpello.poker.ui.login.makeToast
+import com.kumpello.poker.ui.login.LoginActivity
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
+import dagger.hilt.android.internal.Contexts.getApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 @Composable
-fun SignUp(navController: NavHostController, authService: AuthenticationService) {
+fun SignUp(
+    navController: NavHostController,
+    authService: AuthenticationService,
+    activity: LoginActivity
+) {
     val mContext = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -86,22 +93,25 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
                             email.value.text,
                             password.value.text
                         )
-                        if (response != null) {
-                            Account(
-                                username.value.text,
-                                AccountType.REGULAR_ACCOUNT.name
-                            ).also { account ->
-                                //ToDo: Password is saved in plaintext, some kind of encryption needs to be added
-                                //PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
-                            }
-                            //PokerApplication.saveUserID(response.get().id)
-                            //PokerApplication.saveAuthToken(response.get().token)
-                            //PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+                        withContext(Dispatchers.Main) {
+                            if (response != null) {
+                                Account(
+                                    username.value.text,
+                                    AccountType.REGULAR_ACCOUNT.name
+                                ).also { account ->
+                                    //ToDo: Password is saved in plaintext, some kind of encryption needs to be added
+                                    //PokerApplication.accountManager.addAccountExplicitly(account, password.value.text, null)
+                                }
 
-                            makeToast(mContext, "Login succeeded!")
-                            //navController.navigate()
-                        } else {
-                            makeToast(mContext, "Login failed!")
+                                //PokerApplication.saveUserID(response!!.get().id)
+                                //PokerApplication.saveAuthToken(response!!.get().token)
+                                //PokerApplication.saveAuthRefreshToken(response.get().refreshToken)
+
+                                activity.makeToast(mContext, "Login succeeded!")
+                                //navController.navigate()
+                            } else {
+                                activity.makeToast(mContext, "Login failed!")
+                            }
                         }
                     }
                 },
@@ -138,6 +148,6 @@ fun SignUp(navController: NavHostController, authService: AuthenticationService)
 @Composable
 fun SignUpPreview() {
     PokerTheme {
-        SignUp(rememberNavController(), AuthenticationService())
+        SignUp(rememberNavController(), AuthenticationService(), LoginActivity())
     }
 }

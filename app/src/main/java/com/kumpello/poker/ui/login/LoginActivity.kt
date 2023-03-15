@@ -2,6 +2,7 @@ package com.kumpello.poker.ui.login
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Looper
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,13 +35,14 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LoginActivity : ComponentActivity(), CoroutineScope by MainScope() {
     private lateinit var viewModel: LoginActivityViewModel
+    lateinit var activity: LoginActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewModel: LoginActivityViewModel by viewModels()
         this.viewModel = viewModel
-        val activity = this
+        activity = this
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -68,11 +70,11 @@ class LoginActivity : ComponentActivity(), CoroutineScope by MainScope() {
             }
 
             composable(LoginRoutes.Login.route) {
-                Login(navController, viewModel.authenticationService)
+                Login(navController, viewModel.authenticationService, activity)
             }
 
             composable(LoginRoutes.SignUp.route) {
-                SignUp(navController, viewModel.authenticationService)
+                SignUp(navController, viewModel.authenticationService, activity)
             }
         }
     }
@@ -99,8 +101,8 @@ class LoginActivity : ComponentActivity(), CoroutineScope by MainScope() {
             Navigation()
         }
     }
-}
 
-fun makeToast(mContext: Context, message: String) {
-    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+    fun makeToast(mContext: Context, message: String) {
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+    }
 }
