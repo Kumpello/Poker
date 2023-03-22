@@ -81,6 +81,7 @@ fun Login(navController: NavHostController, authService: AuthenticationService, 
                                 application.saveUserID(response!!.get().id)
                                 application.saveAuthToken(response!!.get().token)
                                 application.saveAuthRefreshToken(response!!.get().refresh_token)
+
                                 activity.makeToast(mContext, "Login succeeded!")
                                 //navController.navigate()
                             } else {

@@ -28,6 +28,7 @@ fun Organizations() {
             Spacer(Modifier.size(20.dp))
             FindOrganizationsButton()
         }
+
     }
 }
 
