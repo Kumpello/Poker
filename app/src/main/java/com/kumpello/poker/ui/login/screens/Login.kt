@@ -1,5 +1,6 @@
 package com.kumpello.poker.ui.login.screens
 
+import android.content.Intent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -31,6 +32,7 @@ import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.AuthResponseData
 import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.login.LoginActivity
+import com.kumpello.poker.ui.main.MainActivity
 import com.kumpello.poker.ui.navigation.LoginRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.Dispatchers
@@ -83,7 +85,7 @@ fun Login(navController: NavHostController, authService: AuthenticationService, 
                                 application.saveAuthRefreshToken(response!!.get().refresh_token)
 
                                 activity.makeToast(mContext, "Login succeeded!")
-                                //navController.navigate()
+                                mContext.startActivity(Intent(mContext, MainActivity::class.java))
                             } else {
                                 activity.makeToast(mContext, "Login failed!")
                             }
