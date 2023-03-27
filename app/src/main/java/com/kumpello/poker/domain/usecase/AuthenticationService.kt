@@ -20,8 +20,6 @@ class AuthenticationService @Inject constructor() {
     fun signUp(username: String, email: String, password: String): Optional<AuthResponseData> {
         val authResponse = authApi.signUp(SignUpRequestData(username, email, password)).execute()
         logError(authResponse)
-        Log.e("SignUp:", authResponse.errorBody().toString())
-        Log.d("SignUp:", authResponse.body().toString())
         return Optional.ofNullable(authResponse.body())
     }
 
@@ -34,6 +32,8 @@ class AuthenticationService @Inject constructor() {
     private fun logError(response: Response<AuthResponseData>) {
         if (!response.isSuccessful) {
             Log.e("Authentication error: ", response.errorBody().toString())
+        } else {
+            Log.d("Authentication:", response.body().toString())
         }
     }
 

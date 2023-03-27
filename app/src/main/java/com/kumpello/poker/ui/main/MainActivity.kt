@@ -107,6 +107,10 @@ class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
         }
     }
 
+    fun GetUserOrganizations() {
+
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun DefaultPreview() {
