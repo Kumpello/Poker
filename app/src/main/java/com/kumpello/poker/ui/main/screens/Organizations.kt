@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kumpello.poker.data.model.ID
 import com.kumpello.poker.data.model.OrganizationData
 import com.kumpello.poker.ui.theme.PokerTheme
-import java.util.Collections
+import java.sql.Timestamp
+import java.time.Instant
 
 @Composable
 fun Organizations(organizations: List<OrganizationData>) {
@@ -76,6 +78,8 @@ fun FindOrganizationsButton() {
 @Composable
 fun OrganizationsPreview() {
     PokerTheme {
-        Organizations(Collections((2137, "dupa", 5)))
+        Organizations(listOf(OrganizationData(ID("2137"), "dupa", ID("1"),listOf(ID("420")),
+            Timestamp.from(Instant.now()) as Timestamp
+        )))
     }
 }
