@@ -24,7 +24,7 @@ fun Organizations(organizations: List<OrganizationData>) {
     val mContext = LocalContext.current
 
     Column(
-        modifier = Modifier.padding(20.dp),
+        modifier = Modifier.padding(10.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -38,6 +38,7 @@ fun Organizations(organizations: List<OrganizationData>) {
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(16.dp),
             state = rememberLazyListState(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(organizations) { organization ->
                 Organization(organization.id, organization.name, organization.members.size)
@@ -78,8 +79,8 @@ fun FindOrganizationsButton() {
 @Composable
 fun OrganizationsPreview() {
     PokerTheme {
-        Organizations(listOf(OrganizationData(ID("2137"), "dupa", ID("1"),listOf(ID("420")),
-            Timestamp.from(Instant.now()) as Timestamp
+        Organizations(listOf(OrganizationData(ID("2137"), "dupa", ID("1488"),listOf(ID("420")),
+            Timestamp.valueOf("2005-04-02 21:37:00.000")
         )))
     }
 }
