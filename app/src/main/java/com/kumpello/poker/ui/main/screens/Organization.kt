@@ -19,13 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.kumpello.poker.data.model.ID
-import com.kumpello.poker.data.model.OrganizationData
 import com.kumpello.poker.ui.theme.PokerTheme
-import java.sql.Timestamp
-import java.time.Instant
 import java.time.LocalTime
 import kotlin.random.Random
 

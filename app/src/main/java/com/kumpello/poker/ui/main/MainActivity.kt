@@ -19,7 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.data.model.ID
-import com.kumpello.poker.data.model.OrganizationData
+import com.kumpello.poker.data.model.organizations.OrganizationData
 import com.kumpello.poker.ui.main.screens.Games
 import com.kumpello.poker.ui.main.screens.News
 import com.kumpello.poker.ui.main.screens.Organizations
@@ -29,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import java.sql.Timestamp
-import java.time.Instant
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {

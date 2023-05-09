@@ -1,5 +1,6 @@
-package com.kumpello.poker.data.model
+package com.kumpello.poker.data.model.organizations
 
+import com.kumpello.poker.data.model.JoinOrganizationData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.HTTP

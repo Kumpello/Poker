@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kumpello.poker.data.model.ID
-import com.kumpello.poker.data.model.OrganizationData
+import com.kumpello.poker.data.model.organizations.OrganizationData
 import com.kumpello.poker.ui.theme.PokerTheme
 import java.sql.Timestamp
 
@@ -183,8 +183,10 @@ fun JoinOrganizationButton() {
 @Composable
 fun OrganizationsPreview() {
     PokerTheme {
-        Organizations(listOf(OrganizationData(ID("2137"), "dupa", ID("1488"),listOf(ID("420")),
+        Organizations(listOf(
+            OrganizationData(ID("2137"), "dupa", ID("1488"),listOf(ID("420")),
             Timestamp.valueOf("2005-04-02 21:37:00.000")
-        )))
+        )
+        ))
     }
 }

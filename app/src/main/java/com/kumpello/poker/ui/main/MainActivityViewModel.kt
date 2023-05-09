@@ -2,8 +2,10 @@ package com.kumpello.poker.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kumpello.poker.app.PokerApplication
+import com.kumpello.poker.data.model.ErrorData
+import com.kumpello.poker.data.model.organizations.OrganizationData
 import com.kumpello.poker.domain.events.JoinOrganizationEvent
+import com.kumpello.poker.domain.events.NewOrganizationEvent
 import com.kumpello.poker.domain.events.OrganizationsEvents
 import com.kumpello.poker.domain.usecase.OrganizationsService
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,12 +22,13 @@ class MainActivityViewModel @Inject constructor(private val organizationsService
                 //Todo add to PokerGo
             }
             is OrganizationsEvents.JoinOrganization -> {
-                //ToDo checks/filter
-                joinOrganization(event.token, event.name)
+                joinOrganization(event.token, event.organizationName, event.name)
             }
             is OrganizationsEvents.NewOrganization -> {
-                //ToDo Checks
                 organizationsService.createOrganization(event.token, event.name)
+            }
+            is OrganizationsEvents.GetOrganization -> {
+                //ToDo
             }
         }
     }
@@ -34,16 +37,22 @@ class MainActivityViewModel @Inject constructor(private val organizationsService
 
     }
 
-    fun makeNewOrganization() {
-
+    fun makeNewOrganization(token: String, organizationName: String) {
+        val newEvent = MutableSharedFlow<NewOrganizationEvent>()
+        viewModelScope.launch {
+            when(val response = organizationsService.createOrganization(token, organizationName)) {
+                is OrganizationData -> newEvent.emit(NewOrganizationEvent.Success(response))
+                is ErrorData -> newEvent.emit(NewOrganizationEvent.Error(response))
+            }
+        }
     }
 
-    fun joinOrganization(token: String, organizationName: String) {
+    private fun joinOrganization(token: String, organizationName: String, name: String) {
         val joinEvent = MutableSharedFlow<JoinOrganizationEvent>()
-        organizationsService.joinOrganization(token, organizationName)
         viewModelScope.launch {
-            if (!hasError) {
-                joinEvent.emit(JoinOrganizationEvent.Success)
+            when(val response = organizationsService.joinOrganization(token, organizationName, name)) {
+                is OrganizationData -> joinEvent.emit(JoinOrganizationEvent.Success(response))
+                is ErrorData -> joinEvent.emit(JoinOrganizationEvent.Error(response))
             }
         }
     }
