@@ -4,13 +4,11 @@ import android.util.Log
 import com.kumpello.poker.data.model.ErrorData
 import com.kumpello.poker.data.model.JoinOrganizationData
 import com.kumpello.poker.data.model.organizations.NewOrganizationData
-import com.kumpello.poker.data.model.organizations.OrganizationData
 import com.kumpello.poker.data.model.organizations.OrganizationsApi
 import com.kumpello.poker.data.model.organizations.OrganizationsData
 import com.kumpello.poker.data.model.organizations.OrganizationsResponse
 import com.kumpello.poker.data.services.RetrofitClient
 import dagger.hilt.android.scopes.ViewModelScoped
-import java.util.Optional
 import javax.inject.Inject
 
 @ViewModelScoped

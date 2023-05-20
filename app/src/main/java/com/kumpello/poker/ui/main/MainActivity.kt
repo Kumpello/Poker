@@ -7,7 +7,13 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,8 +24,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.ID
-import com.kumpello.poker.data.model.organizations.OrganizationData
+import com.kumpello.poker.domain.events.SendOrganizationsEvent
 import com.kumpello.poker.ui.main.screens.Games
 import com.kumpello.poker.ui.main.screens.News
 import com.kumpello.poker.ui.main.screens.Organizations
@@ -28,17 +35,24 @@ import com.kumpello.poker.ui.theme.PokerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
-import java.sql.Timestamp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
+
     private lateinit var viewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewModel: MainActivityViewModel by viewModels()
+        val application = this.applicationContext as PokerApplication
         this.viewModel = viewModel
+
+        viewModel.onEvent(
+            SendOrganizationsEvent.GetOrganization(
+            application.getAuthToken()!!,
+            ID(application.getUserID()!!
+            )))
 
         setContent {
             PokerTheme {
@@ -59,12 +73,7 @@ class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
             }
 
             composable(MainRoutes.Organizations.route) {
-                Organizations(listOf(
-                    OrganizationData(
-                        ID("2137"), "dupa", ID("1"),listOf(ID("420")),
-                        Timestamp.valueOf("2005-04-02 21:37:00.000")
-                )
-                ))
+                Organizations(viewModel)
             }
         }
     }
