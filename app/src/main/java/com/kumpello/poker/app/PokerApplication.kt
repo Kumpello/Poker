@@ -35,6 +35,14 @@ class PokerApplication: Application() {
         return sharedPreferences.getString(userIDKey, null)
     }
 
+    fun saveUserName(name: String) {
+        sharedPreferences.edit().putString(userNameKey, name).apply()
+    }
+
+    fun getUserName(): String? {
+        return sharedPreferences.getString(userNameKey, null)
+    }
+
     fun saveAuthToken(token: String) {
         sharedPreferences.edit().putString(authTokenKey, token).apply()
     }
@@ -54,6 +62,7 @@ class PokerApplication: Application() {
     companion object {
         private const val preferencesName = "secret_keeper"
         private const val userIDKey = "user_id"
+        private const val userNameKey = "user_name"
         private const val authTokenKey = "auth_token"
         private const val authRefreshTokenKey = "auth_refresh_token"
     }

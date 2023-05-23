@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kumpello.poker.app.PokerApplication
 import com.kumpello.poker.data.model.organizations.OrganizationsUIState
 import com.kumpello.poker.domain.events.GetOrganizationsEvent
 import com.kumpello.poker.domain.events.SendOrganizationsEvent
@@ -112,8 +113,11 @@ fun Organizations(viewModel: MainActivityViewModel) {
 
 @Composable
 fun NewOrganizationButton(viewModel: MainActivityViewModel) {
+    val mContext = LocalContext.current
+    val application = mContext.applicationContext as PokerApplication
+
     if (viewModel._uiState.value.dialogOpen) {
-        var text by remember {
+        var organizationName by remember {
             mutableStateOf("")
         }
 
@@ -127,7 +131,7 @@ fun NewOrganizationButton(viewModel: MainActivityViewModel) {
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            viewModel.onEvent(SendOrganizationsEvent(SendOrganizationsEvent.NewOrganization()))
+                            viewModel.onEvent(SendOrganizationsEvent.NewOrganization(application.getAuthToken()!!, organizationName))
                             viewModel._uiState.value.dialogOpen = false
                         }
                     ) {
@@ -148,8 +152,8 @@ fun NewOrganizationButton(viewModel: MainActivityViewModel) {
                     Text(text = "Create new Organization")
                 },
                 text = {
-                    OutlinedTextField(text, onValueChange = { newText ->
-                        text = newText
+                    OutlinedTextField(organizationName, onValueChange = { newText ->
+                        organizationName = newText
                     })
                     Text(text = "Please write name of your new organization")
                 },
@@ -177,8 +181,11 @@ fun NewOrganizationButton(viewModel: MainActivityViewModel) {
 @Composable
 fun JoinOrganizationButton(viewModel: MainActivityViewModel) {
     //ToDo this need to be changed to another screen with realtime result of input
+    val mContext = LocalContext.current
+    val application = mContext.applicationContext as PokerApplication
+
     if (viewModel._uiState.value.dialogOpen) {
-        var text by remember {
+        var organizationName by remember {
             mutableStateOf("")
         }
 
@@ -192,8 +199,7 @@ fun JoinOrganizationButton(viewModel: MainActivityViewModel) {
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            // perform the confirm action and
-                            // close the dialog
+                            viewModel.onEvent(SendOrganizationsEvent.JoinOrganization(application.getAuthToken()!!, organizationName, application.getUserName()!!))
                             viewModel._uiState.value.dialogOpen = false
                         }
                     ) {
@@ -214,8 +220,8 @@ fun JoinOrganizationButton(viewModel: MainActivityViewModel) {
                     Text(text = "Join organization")
                 },
                 text = {
-                    OutlinedTextField(text, onValueChange = { newText ->
-                        text = newText
+                    OutlinedTextField(organizationName, onValueChange = { newText ->
+                        organizationName = newText
                     })
                     Text(text = "Please write name of organization you wish to join")
                 },

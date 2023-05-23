@@ -112,6 +112,7 @@ fun SignUp(
                                 }
 
                                 application.saveUserID(response!!.get().id)
+                                application.saveUserName(username.value.text)
                                 application.saveAuthToken(response!!.get().token)
                                 application.saveAuthRefreshToken(response!!.get().refresh_token)
 

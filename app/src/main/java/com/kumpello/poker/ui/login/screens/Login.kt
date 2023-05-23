@@ -81,6 +81,7 @@ fun Login(navController: NavHostController, authService: AuthenticationService, 
                         withContext(Dispatchers.Main){
                             if (response != null) {
                                 application.saveUserID(response!!.get().id)
+                                application.saveUserName(username.value.text)
                                 application.saveAuthToken(response!!.get().token)
                                 application.saveAuthRefreshToken(response!!.get().refresh_token)
 
