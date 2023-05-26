@@ -13,6 +13,8 @@ import com.kumpello.poker.domain.events.GetOrganizationsEvent
 import com.kumpello.poker.domain.events.SendOrganizationsEvent
 import com.kumpello.poker.domain.usecase.OrganizationsService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,7 +44,7 @@ class MainActivityViewModel @Inject constructor(private val organizationsService
     }
 
     private fun getUserOrganizations(token: String, id: ID) {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             when(val response = organizationsService.getOrganizations(token)) {
                 is OrganizationsData -> {
                     event.emit(GetOrganizationsEvent.GetSuccess(OrganizationsData(response.organizations.filter { organizationData ->  organizationData.members.contains(id)})))
@@ -53,7 +55,7 @@ class MainActivityViewModel @Inject constructor(private val organizationsService
     }
 
     private fun makeNewOrganization(token: String, organizationName: String) {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             when(val response = organizationsService.createOrganization(token, organizationName)) {
                 is OrganizationData -> event.emit(GetOrganizationsEvent.NewSuccess(response))
                 is ErrorData -> event.emit(GetOrganizationsEvent.NewError(response))
@@ -62,7 +64,7 @@ class MainActivityViewModel @Inject constructor(private val organizationsService
     }
 
     private fun joinOrganization(token: String, organizationName: String, name: String) {
-        viewModelScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             when(val response = organizationsService.joinOrganization(token, organizationName, name)) {
                 is OrganizationData -> event.emit(GetOrganizationsEvent.JoinSuccess(response))
                 is ErrorData -> event.emit(GetOrganizationsEvent.JoinError(response))
