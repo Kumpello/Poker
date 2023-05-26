@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,9 +39,12 @@ import com.kumpello.poker.domain.events.SendOrganizationsEvent
 import com.kumpello.poker.domain.usecase.OrganizationsService
 import com.kumpello.poker.ui.main.MainActivityViewModel
 import com.kumpello.poker.ui.theme.PokerTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun Organizations(viewModel: MainActivityViewModel) {
+
     val mContext = LocalContext.current
 
     LaunchedEffect(mContext) {
@@ -115,6 +119,7 @@ fun Organizations(viewModel: MainActivityViewModel) {
 fun NewOrganizationButton(viewModel: MainActivityViewModel) {
     val mContext = LocalContext.current
     val application = mContext.applicationContext as PokerApplication
+    val coroutineScope = rememberCoroutineScope()
 
     if (viewModel._uiState.value.dialogOpen) {
         var organizationName by remember {
@@ -131,8 +136,11 @@ fun NewOrganizationButton(viewModel: MainActivityViewModel) {
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            viewModel.onEvent(SendOrganizationsEvent.NewOrganization(application.getAuthToken()!!, organizationName))
-                            viewModel._uiState.value.dialogOpen = false
+                            coroutineScope.launch(Dispatchers.IO) {
+                                viewModel.onEvent(SendOrganizationsEvent.NewOrganization(
+                                    application.getAuthToken()!!,
+                                    organizationName))
+                            }
                         }
                     ) {
                         Text(text = "Confirm")
@@ -183,6 +191,7 @@ fun JoinOrganizationButton(viewModel: MainActivityViewModel) {
     //ToDo this need to be changed to another screen with realtime result of input
     val mContext = LocalContext.current
     val application = mContext.applicationContext as PokerApplication
+    val coroutineScope = rememberCoroutineScope()
 
     if (viewModel._uiState.value.dialogOpen) {
         var organizationName by remember {
@@ -199,8 +208,15 @@ fun JoinOrganizationButton(viewModel: MainActivityViewModel) {
                 confirmButton = {
                     TextButton(
                         onClick = {
-                            viewModel.onEvent(SendOrganizationsEvent.JoinOrganization(application.getAuthToken()!!, organizationName, application.getUserName()!!))
-                            viewModel._uiState.value.dialogOpen = false
+                            coroutineScope.launch(Dispatchers.IO) {
+                                viewModel.onEvent(
+                                    SendOrganizationsEvent.JoinOrganization(
+                                        application.getAuthToken()!!,
+                                        organizationName,
+                                        application.getUserName()!!
+                                    )
+                                )
+                            }
                         }
                     ) {
                         Text(text = "Confirm")

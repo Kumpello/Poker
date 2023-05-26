@@ -34,7 +34,9 @@ import com.kumpello.poker.ui.navigation.MainRoutes
 import com.kumpello.poker.ui.theme.PokerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
@@ -48,11 +50,13 @@ class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
         val application = this.applicationContext as PokerApplication
         this.viewModel = viewModel
 
-        viewModel.onEvent(
-            SendOrganizationsEvent.GetOrganization(
-            application.getAuthToken()!!,
-            ID(application.getUserID()!!
-            )))
+        CoroutineScope(IO).launch {
+            viewModel.onEvent(
+                SendOrganizationsEvent.GetOrganization(
+                    application.getAuthToken()!!,
+                    ID(application.getUserID()!!
+                    )))
+        }
 
         setContent {
             PokerTheme {

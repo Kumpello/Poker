@@ -94,7 +94,7 @@ fun SignUp(
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    var response: Optional<AuthResponseData>? = null
+                    var response: Optional<AuthResponseData>?
                     coroutineScope.launch(Dispatchers.IO) {
                         response = authService.signUp(
                             username.value.text,
