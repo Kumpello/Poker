@@ -52,6 +52,7 @@ fun Login(navController: NavHostController, authService: AuthenticationService, 
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
+        //ToDo add validation!
         val username = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
 

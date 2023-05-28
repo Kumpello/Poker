@@ -64,6 +64,7 @@ fun SignUp(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
+        //ToDo add validation!
         val username = remember { mutableStateOf(TextFieldValue()) }
         val email = remember { mutableStateOf(TextFieldValue()) }
         val password = remember { mutableStateOf(TextFieldValue()) }
