@@ -42,6 +42,8 @@ import com.kumpello.poker.ui.theme.PokerTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+//ToDo add animations
+
 @Composable
 fun Organizations(viewModel: MainActivityViewModel) {
 
