@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.kumpello.poker.data.model.ID
+import com.kumpello.poker.data.model.authorization.ID
 import com.kumpello.poker.ui.theme.PokerTheme
 import java.time.LocalTime
 import kotlin.random.Random

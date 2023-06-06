@@ -25,7 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.app.PokerApplication
-import com.kumpello.poker.data.model.ID
+import com.kumpello.poker.data.model.authorization.ID
 import com.kumpello.poker.domain.events.SendOrganizationsEvent
 import com.kumpello.poker.ui.main.screens.Games
 import com.kumpello.poker.ui.main.screens.News
@@ -55,7 +55,8 @@ class MainActivity : ComponentActivity(), CoroutineScope by MainScope() {
                 SendOrganizationsEvent.GetOrganization(
                     application.getAuthToken()!!,
                     ID(application.getUserID()!!
-                    )))
+                    )
+                ))
         }
 
         setContent {

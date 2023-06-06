@@ -2,7 +2,7 @@ package com.kumpello.poker.domain.usecase
 
 import android.util.Log
 import com.kumpello.poker.data.model.ErrorData
-import com.kumpello.poker.data.model.JoinOrganizationData
+import com.kumpello.poker.data.model.authorization.JoinOrganizationData
 import com.kumpello.poker.data.model.organizations.NewOrganizationData
 import com.kumpello.poker.data.model.organizations.OrganizationsApi
 import com.kumpello.poker.data.model.organizations.OrganizationsData

@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.kumpello.poker.app.PokerApplication
-import com.kumpello.poker.data.model.AccountType
-import com.kumpello.poker.data.model.AuthResponseData
+import com.kumpello.poker.data.model.authorization.AccountType
+import com.kumpello.poker.data.model.authorization.AuthData
 import com.kumpello.poker.domain.usecase.AuthenticationService
 import com.kumpello.poker.ui.login.LoginActivity
 import com.kumpello.poker.ui.main.MainActivity
@@ -95,7 +95,7 @@ fun SignUp(
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    var response: Optional<AuthResponseData>?
+                    var response: Optional<AuthData>?
                     coroutineScope.launch(Dispatchers.IO) {
                         response = authService.signUp(
                             username.value.text,

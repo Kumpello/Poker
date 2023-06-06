@@ -3,9 +3,8 @@ package com.kumpello.poker.ui.main
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.kumpello.poker.data.model.ErrorData
-import com.kumpello.poker.data.model.ID
+import com.kumpello.poker.data.model.authorization.ID
 import com.kumpello.poker.data.model.organizations.OrganizationData
 import com.kumpello.poker.data.model.organizations.OrganizationsData
 import com.kumpello.poker.data.model.organizations.OrganizationsUIState

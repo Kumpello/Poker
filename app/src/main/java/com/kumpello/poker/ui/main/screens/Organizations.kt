@@ -122,59 +122,63 @@ fun NewOrganizationButton(viewModel: MainActivityViewModel) {
     val mContext = LocalContext.current
     val application = mContext.applicationContext as PokerApplication
     val coroutineScope = rememberCoroutineScope()
+    
+    LaunchedEffect(viewModel._uiState.value.dialogOpen) {
+        if (viewModel._uiState.value.dialogOpen) {
+            var organizationName by remember {
+                mutableStateOf("")
+            }
 
-    if (viewModel._uiState.value.dialogOpen) {
-        var organizationName by remember {
-            mutableStateOf("")
-        }
-
-        PokerTheme {
-            AlertDialog(
-                onDismissRequest = {
-                    // Dismiss the dialog when the user clicks outside the dialog or on the back button.
-                    // If you want to disable that functionality, simply leave this block empty.
-                    //viewModel._uiState.value.dialogOpen = false
-                },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                viewModel.onEvent(SendOrganizationsEvent.NewOrganization(
-                                    application.getAuthToken()!!,
-                                    organizationName))
+            PokerTheme {
+                AlertDialog(
+                    onDismissRequest = {
+                        // Dismiss the dialog when the user clicks outside the dialog or on the back button.
+                        // If you want to disable that functionality, simply leave this block empty.
+                        //viewModel._uiState.value.dialogOpen = false
+                    },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                coroutineScope.launch(Dispatchers.IO) {
+                                    viewModel.onEvent(SendOrganizationsEvent.NewOrganization(
+                                        application.getAuthToken()!!,
+                                        organizationName))
+                                }
                             }
+                        ) {
+                            Text(text = "Confirm")
                         }
-                    ) {
-                        Text(text = "Confirm")
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = {
-                            // close the dialog
-                            viewModel._uiState.value.dialogOpen = false
+                    },
+                    dismissButton = {
+                        TextButton(
+                            onClick = {
+                                // close the dialog
+                                viewModel._uiState.value.dialogOpen = false
+                            }
+                        ) {
+                            Text(text = "Dismiss")
                         }
-                    ) {
-                        Text(text = "Dismiss")
-                    }
-                },
-                title = {
-                    Text(text = "Create new Organization")
-                },
-                text = {
-                    OutlinedTextField(organizationName, onValueChange = { newText ->
-                        organizationName = newText
-                    })
-                    Text(text = "Please write name of your new organization")
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(32.dp),
-                shape = RoundedCornerShape(5.dp),
-                backgroundColor = Color.White
-            )
+                    },
+                    title = {
+                        Text(text = "Create new Organization")
+                    },
+                    text = {
+                        OutlinedTextField(organizationName, onValueChange = { newText ->
+                            organizationName = newText
+                        })
+                        Text(text = "Please write name of your new organization")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(32.dp),
+                    shape = RoundedCornerShape(5.dp),
+                    backgroundColor = Color.White
+                )
+            }
         }
     }
+
+
 
     Button(
         onClick = {

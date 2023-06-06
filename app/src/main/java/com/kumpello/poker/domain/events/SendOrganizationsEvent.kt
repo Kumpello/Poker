@@ -1,6 +1,6 @@
 package com.kumpello.poker.domain.events
 
-import com.kumpello.poker.data.model.ID
+import com.kumpello.poker.data.model.authorization.ID
 
 sealed class SendOrganizationsEvent {
     data class DeleteOrganization(val token: String, val id: ID): SendOrganizationsEvent()
