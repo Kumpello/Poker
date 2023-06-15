@@ -76,12 +76,11 @@ fun Login(navController: NavHostController, authService: AuthenticationService, 
         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
             Button(
                 onClick = {
-                    var response: Optional<AuthData>?
                     coroutineScope.launch(Dispatchers.IO){
-                        response = authService.logIn(username.value.text, password.value.text)
+                        val response = authService.logIn(username.value.text, password.value.text)
                         withContext(Dispatchers.Main){
                             if (response != null) {
-                                application.saveUserID(response!!.get().id)
+                                application.saveUserID(response.get().id)
                                 application.saveUserName(username.value.text)
                                 application.saveAuthToken(response!!.get().token)
                                 application.saveAuthRefreshToken(response!!.get().refresh_token)
